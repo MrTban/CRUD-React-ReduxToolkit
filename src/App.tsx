@@ -1,8 +1,16 @@
+import { Toaster } from "sonner";
 import "./App.css";
-import ListingUsers from "./components/ListingUsers";
+import { CreateUser } from "./components/CreateUser";
+import { ListingUsers } from "./components/ListingUsers";
 
 function App() {
-	return <ListingUsers />;
+	return (
+		<div className="flex flex-col gap-4">
+			<ListingUsers />
+			<CreateUser />
+			<Toaster richColors />
+		</div>
+	);
 }
 
 export default App;

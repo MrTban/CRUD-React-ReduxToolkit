@@ -9,40 +9,14 @@ import {
 	TableRow,
 	Title,
 } from "@tremor/react";
+import { useAppSelector } from "../hooks/store";
+import { useUserActions } from "../hooks/useUserActions";
 
-const users: {
-	id: string;
-	name: string;
-	email: string;
-	github: string;
-}[] = [
-	{
-		id: "1",
-		name: "Tban",
-		email: "tban@gmail.com",
-		github: "MrTban",
-	},
-	{
-		id: "2",
-		name: "Midudev",
-		email: "midu@gmail.com",
-		github: "midudev",
-	},
-	{
-		id: "3",
-		name: "Phil Less",
-		email: "phil@gmail.com",
-		github: "phil",
-	},
-	{
-		id: "4",
-		name: "John Camper",
-		email: "john.camper@gmail.com",
-		github: "john",
-	},
-];
+export const ListingUsers = () => {
+	const users = useAppSelector((state) => state.users);
 
-export default function ListingUsers() {
+	const { removeUser } = useUserActions();
+
 	return (
 		<Card>
 			<Title>
@@ -52,18 +26,23 @@ export default function ListingUsers() {
 			<Table>
 				<TableHead>
 					<TableRow>
-						<TableHeaderCell>ID</TableHeaderCell>
-						<TableHeaderCell>Name</TableHeaderCell>
-						<TableHeaderCell>Email</TableHeaderCell>
-						<TableHeaderCell>Actions</TableHeaderCell>
+						<TableHeaderCell style={{ color: "#fff" }}>ID</TableHeaderCell>
+						<TableHeaderCell style={{ color: "#fff" }}>Name</TableHeaderCell>
+						<TableHeaderCell style={{ color: "#fff" }}>Email</TableHeaderCell>
+						<TableHeaderCell style={{ color: "#fff" }}>Actions</TableHeaderCell>
 					</TableRow>
 				</TableHead>
 
 				<TableBody>
 					{users.map((item) => (
 						<TableRow key={item.name}>
-							<TableCell>{item.id}</TableCell>
-							<TableCell style={{ display: "flex", alignItems: "center" }}>
+							<TableCell style={{ fontWeight: "bold" }}>{item.id}</TableCell>
+							<TableCell
+								style={{
+									display: "flex",
+									alignItems: "center",
+								}}
+							>
 								<img
 									style={{
 										width: "32px",
@@ -78,8 +57,12 @@ export default function ListingUsers() {
 							</TableCell>
 							<TableCell>{item.email}</TableCell>
 							<TableCell>
-								<button type="button">
+								<button
+									type="button"
+									style={{ marginRight: "8px", color: "#fff" }}
+								>
 									<svg
+										aria-label="Edit User"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -94,8 +77,13 @@ export default function ListingUsers() {
 										/>
 									</svg>
 								</button>
-								<button type="button">
+								<button
+									onClick={() => removeUser(item.id)}
+									type="button"
+									style={{ color: "#fff" }}
+								>
 									<svg
+										aria-label="Remove element"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -117,4 +105,4 @@ export default function ListingUsers() {
 			</Table>
 		</Card>
 	);
-}
+};
